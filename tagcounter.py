@@ -17,6 +17,7 @@ if __name__ == "__main__":
         tags_dict = {}
         elapsed = ''
         url = utils.format_url(args.get or args.view)
+
         parsed_url = parse.urlparse(url)
         domain = parsed_url.netloc.replace('www.', '')
 

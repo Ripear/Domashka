@@ -13,8 +13,9 @@ class TagCounter:
     def __init__(self):
         self.app = tk.Tk()
         self.app.title('Tag Counter')
-        self.app.geometry('700x350')
+        self.app.geometry('700x630')
         self.app_text = tk.Text(self.app)
+        self.status_text = tk.Text
         self.input_field = None
         self.tags_dict = {}
         self.elapsed = ''
@@ -32,22 +33,26 @@ class TagCounter:
         entry.pack()
 
         find_button = tk.Button(text="Найти теги!")
-        find_button.pack()
+        find_button.pack(pady=10)
 
         show_button = tk.Button(text="Показать из базы!")
-        show_button.pack()
+        show_button.pack(pady=10)
 
         entry.bind("<Return>", self.on_press)
         find_button.bind("<Button-1>", self.on_press)
         show_button.bind("<Button-1>", self.on_press)
 
-        self.app_text.pack(side=tk.LEFT)
+        self.app_text.pack()
 
-        scroll = tk.Scrollbar(command=self.app_text.yview)
-        scroll.pack(side=tk.LEFT, fill=tk.Y)
+        """scroll = tk.Scrollbar(command=self.app_text.yview)
+        scroll.pack(fill=tk.Y)
 
-        self.app_text.config(yscrollcommand=scroll.set)
+        self.app_text.config(yscrollcommand=scroll.set)"""
         self.app_text.configure(state='disabled')
+
+        self.status_text = tk.Text(height=4)
+        self.status_text.pack(pady=20)
+        self.status_text.configure(state='disabled')
 
         self.app.mainloop()
 
@@ -56,6 +61,7 @@ class TagCounter:
         url = utils.format_url(url=self.input_field.get())
         self.unlock_text_area_for_result()
         self.app_text.delete('1.0', tk.END)
+        self.status_text.delete('1.0', tk.END)
 
         if validators.url(url):
             parsed_url = parse.urlparse(url)
@@ -71,14 +77,19 @@ class TagCounter:
                 for tag in tags_dict:
                     self.app_text.insert(1.0, f'{tag}: {tags_dict[tag]} \n')
             else:
-                self.app_text.insert(1.0, f'Данных по домену "{domain}" в базе нет')
+                if button_object.widget._name in ['!entry', '!button']:
+                    self.status_text.insert(1.0, f'Адрес введен некорректно \n' )
 
-            self.app_text.insert(1.0, f'Время запроса: {elapsed} \n')
+                elif button_object.widget._name == '!button2':
+                    self.status_text.insert(1.0, f'Данных по домену "{domain}" в базе нет')
+
+            self.status_text.insert(1.0, f'Время запроса: {elapsed} \n')
 
         else:
-            self.app_text.insert(1.0, f'Задан некорректный адрес {url} \n')
+            self.status_text.insert(1.0, f'Задан некорректный адрес {url} \n')
 
         self.app_text.configure(state='disabled')
+        self.status_text.configure(state='disabled')
         self.tags_dict = tags_dict
         self.elapsed = elapsed
 
@@ -86,3 +97,7 @@ class TagCounter:
         text_win_conf = self.app_text.configure()
         if 'disabled' in text_win_conf['state']:
             self.app_text.configure(state='normal')
+
+        text_win_conf = self.status_text.configure()
+        if 'disabled' in text_win_conf['state']:
+            self.status_text.configure(state='normal')

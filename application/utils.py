@@ -24,10 +24,10 @@ def get_from_db(domain):
 def get_count(url, domain, log_to_file=True, log_to_db=True):
     tags_dict = counter(url=url)
 
-    if log_to_file:
+    if log_to_file and tags_dict:
         create_log_file(domain=domain, tags_dict=tags_dict)
 
-    if log_to_db:
+    if log_to_db and tags_dict:
         db = Database()
         db.insert(site_name=domain, url=url, tags_dict=tags_dict)
 
@@ -52,14 +52,20 @@ def format_url(url):
 
 
 def counter(url):
+    tags_dict = None
     # Получение html
-    page = requests.get(url)
-    tree = html.fromstring(page.content)
+    try:
+        page = requests.get(url)
+        tree = html.fromstring(page.content)
 
-    # Поиск всех тегов
-    all_elms = tree.cssselect('*')
-    all_tags = [x.tag for x in all_elms]
-    tags_dict = dict(Counter(all_tags))
+    except Exception:
+        tree = None
+
+    if tree:
+        # Поиск всех тегов
+        all_elms = tree.cssselect('*')
+        all_tags = [x.tag for x in all_elms]
+        tags_dict = dict(Counter(all_tags))
 
     return tags_dict
 
