@@ -1,0 +1,5 @@
+setup.py
+Domashka.egg-info/PKG-INFO
+Domashka.egg-info/SOURCES.txt
+Domashka.egg-info/dependency_links.txt
+Domashka.egg-info/top_level.txt

@@ -1,0 +1,14 @@
+.idea
+venv
+.main
+.build
+*.pyc
+Pipfile.lock
+__pycache__
+build
+store.db
+tagcounter.spec
+debugs
+*.iml
+misc.xml
+vcs.xml
