@@ -3,6 +3,7 @@ from urllib import parse
 
 import validators
 
+
 from application.db import Database
 from application import utils
 
@@ -78,7 +79,7 @@ class TagCounter:
                     self.app_text.insert(1.0, f'{tag}: {tags_dict[tag]} \n')
             else:
                 if button_object.widget._name in ['!entry', '!button']:
-                    self.status_text.insert(1.0, f'Адрес введен некорректно \n' )
+                    self.status_text.insert(1.0, f'Запрашиваемы сайт не существует \n')
 
                 elif button_object.widget._name == '!button2':
                     self.status_text.insert(1.0, f'Данных по домену "{domain}" в базе нет')

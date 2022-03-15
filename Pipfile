@@ -10,6 +10,7 @@ logger = "*"
 requests = "*"
 cssselect = "*"
 validators = "*"
+pytest = "*"
 
 [dev-packages]
 

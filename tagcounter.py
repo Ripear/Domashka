@@ -7,7 +7,7 @@ from application import utils
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="tagcouter")
+    parser = argparse.ArgumentParser(description="tagcounter")
     parser.add_argument("--get")
     parser.add_argument("--view")
     args = parser.parse_args()
