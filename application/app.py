@@ -79,7 +79,7 @@ class TagCounter:
                     self.app_text.insert(1.0, f'{tag}: {tags_dict[tag]} \n')
             else:
                 if button_object.widget._name in ['!entry', '!button']:
-                    self.status_text.insert(1.0, f'Запрашиваемы сайт не существует \n')
+                    self.status_text.insert(1.0, f'Запрашиваемый сайт не существует \n')
 
                 elif button_object.widget._name == '!button2':
                     self.status_text.insert(1.0, f'Данных по домену "{domain}" в базе нет')
